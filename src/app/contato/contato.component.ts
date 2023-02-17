@@ -12,6 +12,7 @@ import { Contato } from './contato';
 export class ContatoComponent implements OnInit {
 
   formulario!: FormGroup;
+  contatos: Contato[] = [];
 
   constructor(private service: ContatoService, private fb: FormBuilder) { }
 
@@ -23,15 +24,12 @@ export class ContatoComponent implements OnInit {
   }
 
   submit() {
-    const erroNomeRequired = this.formulario.controls.nome.errors?.required
-    const erroEmailInvalido = this.formulario.controls.email.errors?.email
-
-    console.log('erroNomeRequired: ', erroNomeRequired)
-    console.log('erroEmailInvalido: ', erroEmailInvalido)
-
-    // this.service.save(c).subscribe(resposta => {
-    //   console.log(resposta)
-    // })
+    const formValues = this.formulario.value;
+    const contato : Contato = new Contato(formValues.nome, formValues.email);
+    this.service.save(formValues).subscribe(resposta => {
+      this.contatos.push(resposta);
+      console.log(this.contatos)
+    })
   }
 
 }
