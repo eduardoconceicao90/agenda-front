@@ -15,7 +15,7 @@ export class ContatoComponent implements OnInit {
   formulario!: FormGroup;
   contatos: Contato[] = [];
 
-  colunas = ['id', 'nome', 'email', 'favorito']
+  colunas = ['foto', 'id', 'nome', 'email', 'favorito']
 
   constructor(private service: ContatoService, private fb: FormBuilder, private toast: ToastrService) { }
 
@@ -51,6 +51,16 @@ export class ContatoComponent implements OnInit {
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]]
     })
+  }
+
+  uploadFoto(event: any, contato: Contato) {
+    const files = event.target.files;
+    if(files){
+      const foto = files[0];
+      const formData = new FormData();
+      formData.append("foto", foto);
+      this.service.upload(contato, formData).subscribe(resposta => this.listarContatos());
+    }
   }
 
 }
