@@ -29,7 +29,8 @@ export class ContatoComponent implements OnInit {
     const contato : Contato = new Contato(formValues.nome, formValues.email);
     this.service.save(formValues).subscribe(resposta => {
       this.toast.success('Contato cadastrado com sucesso!');
-      this.contatos.push(resposta);
+      let lista: Contato[] = [...this.contatos, resposta];
+      this.contatos = lista;
     })
   }
 
