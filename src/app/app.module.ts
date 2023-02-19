@@ -19,6 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ContatoComponent } from './contato/contato.component';
 import { ContatoService } from './contato.service';
 
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +38,11 @@ import { ContatoService } from './contato.service';
     MatTableModule,
     MatIconModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      progressBar: true
+    }),
   ],
   providers: [ContatoService],
   bootstrap: [AppComponent]

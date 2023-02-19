@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ContatoService } from '../contato.service';
 import { Contato } from './contato';
 
@@ -16,21 +17,32 @@ export class ContatoComponent implements OnInit {
 
   colunas = ['id', 'nome', 'email', 'favorito']
 
-  constructor(private service: ContatoService, private fb: FormBuilder) { }
+  constructor(private service: ContatoService, private fb: FormBuilder, private toast: ToastrService) { }
 
   ngOnInit(): void {
-    this.formulario = this.fb.group({
-      nome: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
-    })
+    this.listarContatos();
+    this.montarFormulario();
   }
 
   submit() {
     const formValues = this.formulario.value;
     const contato : Contato = new Contato(formValues.nome, formValues.email);
     this.service.save(formValues).subscribe(resposta => {
+      this.toast.success('Contato cadastrado com sucesso!');
       this.contatos.push(resposta);
-      console.log(this.contatos)
+    })
+  }
+
+  listarContatos() {
+    this.service.list().subscribe(resposta => {
+      this.contatos = resposta;
+    })
+  }
+
+  montarFormulario() {
+    this.formulario = this.fb.group({
+      nome: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     })
   }
 
