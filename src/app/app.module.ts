@@ -13,6 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -20,11 +21,13 @@ import { ContatoComponent } from './contato/contato.component';
 import { ContatoService } from './contato.service';
 
 import { ToastrModule } from 'ngx-toastr';
+import { ContatoDetalheComponent } from './contato-detalhe/contato-detalhe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContatoComponent
+    ContatoComponent,
+    ContatoDetalheComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatTableModule,
     MatIconModule,
     MatCardModule,
+    MatDialogModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
       timeOut: 4000,
