@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { ContatoDetalheComponent } from '../contato-detalhe/contato-detalhe.component';
 import { ContatoService } from '../contato.service';
 import { Contato } from './contato';
 
@@ -17,7 +19,12 @@ export class ContatoComponent implements OnInit {
 
   colunas = ['foto', 'id', 'nome', 'email', 'favorito']
 
-  constructor(private service: ContatoService, private fb: FormBuilder, private toast: ToastrService) { }
+  constructor(
+          private service: ContatoService,
+          private fb: FormBuilder,
+          private toast: ToastrService,
+          private dialog: MatDialog
+        ) { }
 
   ngOnInit(): void {
     this.listarContatos();
@@ -61,6 +68,14 @@ export class ContatoComponent implements OnInit {
       formData.append("foto", foto);
       this.service.upload(contato, formData).subscribe(resposta => this.listarContatos());
     }
+  }
+
+  visualizarContato(contato: Contato){
+    this.dialog.open(ContatoDetalheComponent, {
+      width: '400px',
+      height: '450px',
+      data: contato
+    })
   }
 
 }
