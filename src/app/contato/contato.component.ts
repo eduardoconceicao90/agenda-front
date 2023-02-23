@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContatoDetalheComponent } from '../contato-detalhe/contato-detalhe.component';
 import { ContatoService } from '../contato.service';
 import { Contato } from './contato';
@@ -22,14 +22,14 @@ export class ContatoComponent implements OnInit {
 
   totalElementos = 0;
   pagina = 0;
-  tamanho = 5;
-  pageSizeOptions: number[] = [5];
+  tamanho = 10;
+  pageSizeOptions: number[] = [10];
 
   constructor(
           private service: ContatoService,
           private fb: FormBuilder,
-          private toast: ToastrService,
-          private dialog: MatDialog
+          private dialog: MatDialog,
+          private snack: MatSnackBar
         ) { }
 
   ngOnInit(): void {
@@ -41,9 +41,11 @@ export class ContatoComponent implements OnInit {
     const formValues = this.formulario.value;
     const contato : Contato = new Contato(formValues.nome, formValues.email);
     this.service.save(formValues).subscribe(resposta => {
-      this.toast.success('Contato cadastrado com sucesso!');
-      let lista: Contato[] = [...this.contatos, resposta];
-      this.contatos = lista;
+      this.listarContatos();
+      this.snack.open('Contato cadastrado com sucesso!', 'OK', {
+        duration: 2000
+      });
+      this.formulario.reset();
     })
   }
 
@@ -53,7 +55,7 @@ export class ContatoComponent implements OnInit {
     })
   }
 
-  listarContatos(pagina = 0, tamanho = 5) {
+  listarContatos(pagina = 0, tamanho = 10) {
     this.service.list(pagina, tamanho).subscribe(resposta => {
       this.contatos = resposta.content!;
       this.totalElementos = resposta.totalElements!;

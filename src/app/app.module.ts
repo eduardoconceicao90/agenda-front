@@ -15,13 +15,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ContatoComponent } from './contato/contato.component';
 import { ContatoService } from './contato.service';
 
-import { ToastrModule } from 'ngx-toastr';
 import { ContatoDetalheComponent } from './contato-detalhe/contato-detalhe.component';
 
 @NgModule({
@@ -44,11 +44,8 @@ import { ContatoDetalheComponent } from './contato-detalhe/contato-detalhe.compo
     MatCardModule,
     MatDialogModule,
     MatPaginatorModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot({
-      timeOut: 4000,
-      progressBar: true
-    }),
+    MatSnackBarModule,
+    ReactiveFormsModule
   ],
   providers: [ContatoService],
   bootstrap: [AppComponent]

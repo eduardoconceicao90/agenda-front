@@ -80,7 +80,7 @@
               <mat-label>Nome: </mat-label>
               <input formControlName="nome" matInput placeholder="Digite seu nome">
             </mat-form-field>
-            <div *ngIf="formulario.controls.nome.errors">
+            <div *ngIf="formulario.controls.nome.errors && !formulario.controls.nome.pristine">
               <div *ngIf="formulario.controls.nome.errors?.required">
                 Campo nome é obrigatório!
               </div>
@@ -90,7 +90,7 @@
               <mat-label>Email: </mat-label>
               <input formControlName="email" matInput placeholder="Digite seu email">
             </mat-form-field>
-            <div *ngIf="formulario.controls.email.errors">
+            <div *ngIf="formulario.controls.email.errors && !formulario.controls.email.pristine">
               <div *ngIf="formulario.controls.email.errors?.required">
                 Campo email é obrigatório!
               </div>
